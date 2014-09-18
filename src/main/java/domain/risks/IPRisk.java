@@ -24,9 +24,9 @@ public class IPRisk implements Risk {
 
     @Override
     public boolean isHigh(Loan loan) {
-        /*List<Loan> loanList = loanDAO.getLoanList(); //TODO: заменить
-        return countIPs(loanList, loan.getIpAddress()) == MAX_LOANS_FROM_IP;*/
-        return false;
+        List<Loan> loanList =
+                loanDAO.getListForTheLastDay(loan.getIpAddress());
+        return countIPs(loanList, loan.getIpAddress()) == MAX_LOANS_FROM_IP;
     }
 
     private int countIPs(List<Loan> loanList, String IPAddress) {

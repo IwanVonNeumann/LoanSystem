@@ -29,6 +29,7 @@ public class RiskAnalyzer {
     }
 
     public boolean isSafe(Loan loan) {
+        System.out.println("Running risk analyzer containing " + riskList.size() + " risk templates...");
         for (Risk risk : riskList) {
             if (risk.isHigh(loan)) {
                 messageService.setMessage(risk.getMessage());

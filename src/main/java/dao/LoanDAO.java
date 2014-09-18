@@ -5,6 +5,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,9 +44,24 @@ public class LoanDAO {
         return list;
     }
 
-    // TODO: делай
     public List<Loan> getByUserId(long id) {
         return userDAO.getById(id).getLoanList();
+    }
+
+
+    public List<Loan> getListForTheLastDay(String IPAddress) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        //List<Loan> list = session.createQuery("from Loan").list();
+
+        Criteria criteria = session.createCriteria(Loan.class);
+        criteria.add(Restrictions.eq("ipAddress", IPAddress));
+
+        List<Loan> list = criteria.list();
+        transaction.commit();
+        session.close();
+        System.out.println("Returning " + list.size() + " list items by IP " + IPAddress);
+        return list;
     }
 
     public Loan getById(long id) {

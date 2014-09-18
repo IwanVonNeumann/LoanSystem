@@ -79,6 +79,7 @@ public class JavaConfig {
 
     @Bean
     public RiskAnalyzer riskAnalyzer() {
+        System.out.println("Creating Bean RiskAnalyzer...");
         RiskAnalyzer riskAnalyzer = new RiskAnalyzer();
         riskAnalyzer.add(new NightRisk());
         riskAnalyzer.add(new IPRisk());
