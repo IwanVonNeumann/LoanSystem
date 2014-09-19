@@ -7,6 +7,10 @@
     <groupId>4finance-homework</groupId>
     <artifactId>LoanSystem</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>loansystem</name>
+    <url>http://maven.apache.org</url>
+
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -76,7 +80,7 @@
     </dependencies>
 
     <properties>
-        <start-class>application.Application</start-class>
+        <start-class>config.Application</start-class>
     </properties>
 
     <build>
@@ -88,6 +92,20 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>config.Application</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>

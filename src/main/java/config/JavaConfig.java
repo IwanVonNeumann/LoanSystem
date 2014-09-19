@@ -71,7 +71,7 @@ public class JavaConfig {
     @Bean
     public List<Risk> riskList() {
         List<Risk> riskList = new ArrayList<Risk>();
-//        riskList.add(new IPRisk());
+        riskList.add(new IPRisk());
         riskList.add(new NightRisk());
         return riskList;
     }
