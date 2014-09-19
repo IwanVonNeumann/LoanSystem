@@ -1,11 +1,11 @@
-package domain.risks;
+package risks;
 
 import controller.messenger.MessageService;
 import domain.Loan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,10 +18,11 @@ public class RiskAnalyzer {
     @Autowired
     MessageService messageService;
 
+    @Resource(name = "riskList")
+//    @Autowired
     private List<Risk> riskList;
 
     public RiskAnalyzer() {
-        riskList = new ArrayList<Risk>();
     }
 
     public void add(Risk risk) {
@@ -29,7 +30,7 @@ public class RiskAnalyzer {
     }
 
     public boolean isSafe(Loan loan) {
-        System.out.println("Running risk analyzer containing " + riskList.size() + " risk templates...");
+//        System.out.println("Running risk analyzer containing " + riskList.size() + " risk templates...");
         for (Risk risk : riskList) {
             if (risk.isHigh(loan)) {
                 messageService.setMessage(risk.getMessage());

@@ -1,9 +1,7 @@
-package domain.risks;
+package risks;
 
 import domain.Loan;
 import org.joda.time.DateTime;
-
-import java.sql.Timestamp;
 
 /**
  * Created by Iwan on 07.09.2014
@@ -25,7 +23,7 @@ public class NightRisk implements Risk {
     private boolean isNight() {
         DateTime now = new DateTime();
         int hours = now.getHourOfDay();
-        System.out.println("hours: " + hours);
+//        System.out.println("hours: " + hours);
         return hours < 8;
     }
 

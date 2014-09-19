@@ -1,17 +1,16 @@
 package config;
 
-import domain.risks.IPRisk;
-import domain.risks.NightRisk;
-import domain.risks.RiskAnalyzer;
+import dao.LoanDAO;
+import risks.IPRisk;
+import risks.NightRisk;
+import risks.Risk;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -20,10 +19,12 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 @EnableAutoConfiguration
-@ComponentScan({"dao", "controller", "domain.risks", "config"})
+@ComponentScan({"dao", "controller", "domain", "config", "risks"})
 //@PropertySource("mysql.properties")
 @PropertySource("h2.properties")
 public class JavaConfig {
@@ -67,6 +68,14 @@ public class JavaConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
+    @Bean
+    public List<Risk> riskList() {
+        List<Risk> riskList = new ArrayList<Risk>();
+//        riskList.add(new IPRisk());
+        riskList.add(new NightRisk());
+        return riskList;
+    }
+
     Properties hibernateProperties() {
         return new Properties() {
             {
@@ -75,14 +84,5 @@ public class JavaConfig {
                 setProperty("hibernate.globally_quoted_identifiers", environment.getProperty("hibernate.show_sql"));
             }
         };
-    }
-
-    @Bean
-    public RiskAnalyzer riskAnalyzer() {
-        System.out.println("Creating Bean RiskAnalyzer...");
-        RiskAnalyzer riskAnalyzer = new RiskAnalyzer();
-        riskAnalyzer.add(new NightRisk());
-        riskAnalyzer.add(new IPRisk());
-        return riskAnalyzer;
     }
 }

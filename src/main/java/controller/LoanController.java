@@ -6,14 +6,13 @@ import dao.UserDAO;
 import domain.Loan;
 import domain.User;
 
-import domain.risks.RiskAnalyzer;
+import risks.RiskAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -31,8 +30,7 @@ public class LoanController {
     @Autowired
     private UserDAO userDAO;
 
-    //@Autowired
-    @Resource(name = "riskAnalyzer")
+    @Autowired
     private RiskAnalyzer riskAnalyzer;
 
     @Autowired

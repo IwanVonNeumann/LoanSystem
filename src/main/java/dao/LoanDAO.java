@@ -25,6 +25,10 @@ public class LoanDAO {
     @Autowired
     private UserDAO userDAO;
 
+    public LoanDAO() {
+        System.out.println("Creating LoanDAO...");
+    }
+
     public void save(Loan loan) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -50,12 +54,13 @@ public class LoanDAO {
 
 
     public List<Loan> getListForTheLastDay(String IPAddress) {
+        System.out.println("Getting list of loans for IP " + IPAddress + "...");
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         //List<Loan> list = session.createQuery("from Loan").list();
 
         Criteria criteria = session.createCriteria(Loan.class);
-        criteria.add(Restrictions.eq("ipAddress", IPAddress));
+        //criteria.add(Restrictions.eq("ipAddress", IPAddress));
 
         List<Loan> list = criteria.list();
         transaction.commit();

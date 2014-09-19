@@ -4,6 +4,8 @@ import dao.LoanDAO;
 import dao.UserDAO;
 import domain.Loan;
 import domain.User;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
@@ -97,6 +99,7 @@ public class Application {
         for (Loan loan : user2.getLoanList()) {
             System.out.println(loan);
         }
+
     }
 
 }

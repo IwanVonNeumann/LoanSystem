@@ -1,4 +1,4 @@
-package domain.risks;
+package risks;
 
 import dao.LoanDAO;
 import domain.Loan;
@@ -9,12 +9,13 @@ import java.util.List;
 /**
  * Created by Iwan on 13.09.2014
  */
+
 public class IPRisk implements Risk {
 
     public static final int MAX_LOANS_FROM_IP = 3;
 
     @Autowired
-    LoanDAO loanDAO;
+    private LoanDAO loanDAO;
 
     private String message;
 
@@ -24,6 +25,8 @@ public class IPRisk implements Risk {
 
     @Override
     public boolean isHigh(Loan loan) {
+        System.out.println("Checking IP risk...");
+        System.out.println("LoanDAO is null: " + (loanDAO == null));
         List<Loan> loanList =
                 loanDAO.getListForTheLastDay(loan.getIpAddress());
         return countIPs(loanList, loan.getIpAddress()) == MAX_LOANS_FROM_IP;

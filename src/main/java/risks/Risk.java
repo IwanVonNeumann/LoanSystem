@@ -1,4 +1,4 @@
-package domain.risks;
+package risks;
 
 import domain.Loan;
 
