@@ -43,6 +43,10 @@ public class NightRiskTest {
 
         assertTrue(nightRisk.isHigh(loan)); // night + maxLoan
 
+        when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 7, 59, 59)); // still night
+
+        assertTrue(nightRisk.isHigh(loan)); // night + maxLoan
+
         when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 8, 0, 0)); // 8 am
 
         assertFalse(nightRisk.isHigh(loan)); // maxLoan only
