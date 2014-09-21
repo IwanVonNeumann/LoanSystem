@@ -6,7 +6,7 @@ import dao.UserDAO;
 import domain.Loan;
 import domain.User;
 
-import risks.RiskAnalyzer;
+import domain.risks.RiskAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +31,7 @@ public class LoanController {
     private UserDAO userDAO;
 
     @Autowired
-    private RiskAnalyzer riskAnalyzer;
+    private RiskAnalyzer riskAnalyzerBean;
 
     @Autowired
     private MessageService messageService;
@@ -66,7 +66,7 @@ public class LoanController {
         loan.setInterest(interest);
         loan.setIpAddress(request.getRemoteAddr());
 
-        if (riskAnalyzer.isSafe(loan)) {
+        if (riskAnalyzerBean.isSafe(loan)) {
             user.addLoan(loan);
             userDAO.save(user);
 

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,10 +25,6 @@ public class LoanDAO {
 
     @Autowired
     private UserDAO userDAO;
-
-    public LoanDAO() {
-        System.out.println("Creating LoanDAO...");
-    }
 
     public void save(Loan loan) {
         Session session = sessionFactory.openSession();
@@ -54,13 +51,14 @@ public class LoanDAO {
 
 
     public List<Loan> getListForTheLastDay(String IPAddress) {
-        System.out.println("Getting list of loans for IP " + IPAddress + "...");
+//        System.out.println("Getting list of loans for IP " + IPAddress + "...");
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        //List<Loan> list = session.createQuery("from Loan").list();
 
         Criteria criteria = session.createCriteria(Loan.class);
-        //criteria.add(Restrictions.eq("ipAddress", IPAddress));
+        criteria.add(Restrictions.eq("ipAddress", IPAddress));
+        criteria.add(Restrictions.ge("floatedAt",
+                new DateTime().minusDays(1).toDate()));
 
         List<Loan> list = criteria.list();
         transaction.commit();

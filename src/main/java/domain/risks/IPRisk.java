@@ -1,8 +1,9 @@
-package risks;
+package domain.risks;
 
 import dao.LoanDAO;
 import domain.Loan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * Created by Iwan on 13.09.2014
  */
 
+@Component
 public class IPRisk implements Risk {
 
     public static final int MAX_LOANS_FROM_IP = 3;
@@ -25,8 +27,8 @@ public class IPRisk implements Risk {
 
     @Override
     public boolean isHigh(Loan loan) {
-        System.out.println("Checking IP risk...");
-        System.out.println("LoanDAO is null: " + (loanDAO == null));
+//        System.out.println("Checking IP risk...");
+//        System.out.println("LoanDAO is null: " + (loanDAO == null));
         List<Loan> loanList =
                 loanDAO.getListForTheLastDay(loan.getIpAddress());
         return countIPs(loanList, loan.getIpAddress()) == MAX_LOANS_FROM_IP;

@@ -63,6 +63,20 @@ public class User {
                 .toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        //if (id != user.id) return false;
+        if (!name.equals(user.name)) return false;
+
+        return true;
+    }
+
+
     // business
 
     public void addLoan(Loan loan) {

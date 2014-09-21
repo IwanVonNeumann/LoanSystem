@@ -1,14 +1,16 @@
 package config;
 
-import dao.LoanDAO;
-import risks.IPRisk;
-import risks.NightRisk;
-import risks.Risk;
+import domain.risks.IPRisk;
+import domain.risks.NightRisk;
 
+import domain.risks.Risk;
+import domain.risks.RiskAnalyzer;
+import domain.time.DateTimeSource;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.*;
 
@@ -18,15 +20,14 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 @EnableAutoConfiguration
-@ComponentScan({"dao", "controller", "domain", "config", "risks"})
-//@PropertySource("mysql.properties")
-@PropertySource("h2.properties")
+@ComponentScan(basePackages = {"config", "controller", "dao", "domain"})
+@PropertySource("mysql.properties")
+//@PropertySource("h2.properties")
 public class JavaConfig {
 
     @Autowired
@@ -69,11 +70,22 @@ public class JavaConfig {
     }
 
     @Bean
-    public List<Risk> riskList() {
-        List<Risk> riskList = new ArrayList<Risk>();
-        riskList.add(new IPRisk());
-        riskList.add(new NightRisk());
-        return riskList;
+    public Risk nightRiskBean() {
+        return new NightRisk();
+    }
+
+    @Bean
+    public Risk ipRiskBean() {
+        return new IPRisk();
+    }
+
+    @Bean
+    public RiskAnalyzer riskAnalyzerBean() {
+//        System.out.println("Initializing RiskAnalyzerBean...");
+        RiskAnalyzer riskAnalyzer = new RiskAnalyzer();
+//        riskAnalyzer.add(new NightRisk());
+//        riskAnalyzer.add(new IPRisk());
+        return riskAnalyzer;
     }
 
     Properties hibernateProperties() {
