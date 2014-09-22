@@ -63,7 +63,7 @@ public class LoanDAO {
         List<Loan> list = criteria.list();
         transaction.commit();
         session.close();
-        System.out.println("Returning " + list.size() + " list items by IP " + IPAddress);
+//        System.out.println("Returning " + list.size() + " list items by IP " + IPAddress);
         return list;
     }
 

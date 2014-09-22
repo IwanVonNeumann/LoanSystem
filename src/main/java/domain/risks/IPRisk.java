@@ -27,21 +27,19 @@ public class IPRisk implements Risk {
 
     @Override
     public boolean isHigh(Loan loan) {
-//        System.out.println("Checking IP risk...");
-//        System.out.println("LoanDAO is null: " + (loanDAO == null));
         List<Loan> loanList =
                 loanDAO.getListForTheLastDay(loan.getIpAddress());
-        return countIPs(loanList, loan.getIpAddress()) == MAX_LOANS_FROM_IP;
+        return loanList.size() >= MAX_LOANS_FROM_IP;
     }
 
-    private int countIPs(List<Loan> loanList, String IPAddress) {
+/*    private int countIPs(List<Loan> loanList, String IPAddress) {
         int c = 0;
         for (Loan loan : loanList) {
             if (loan.getIpAddress().equals(IPAddress)) c++;
             if (c == MAX_LOANS_FROM_IP) break;
         }
         return c;
-    }
+    }*/
 
     @Override
     public String getMessage() {

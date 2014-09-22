@@ -30,27 +30,39 @@ public class NightRiskTest {
     NightRisk nightRisk;
 
     @Test
-    public void testRisk() {
+    public void testNightLoan() {
 
         when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 0, 0, 0)); // midnight
 
         Loan loan = new Loan();
         loan.setAmount(300);
 
-        assertFalse(nightRisk.isHigh(loan)); // night only
-
-        loan.setAmount(loan.MAX_LOAN);
-
-        assertTrue(nightRisk.isHigh(loan)); // night + maxLoan
-
-        when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 7, 59, 59)); // still night
-
-        assertTrue(nightRisk.isHigh(loan)); // night + maxLoan
-
-        when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 8, 0, 0)); // 8 am
-
-        assertFalse(nightRisk.isHigh(loan)); // maxLoan only
+        assertFalse(nightRisk.isHigh(loan));
     }
 
+    @Test
+    public void testMaxLoan() {
 
+        when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 12, 0, 0)); // midday
+
+        Loan loan = new Loan();
+        loan.setAmount(loan.MAX_LOAN);
+
+        assertFalse(nightRisk.isHigh(loan));
+    }
+
+    @Test
+    public void testMaxLoanAtNight() {
+
+        when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 0, 0, 0)); // midnight
+
+        Loan loan = new Loan();
+        loan.setAmount(loan.MAX_LOAN);
+
+        assertTrue(nightRisk.isHigh(loan));
+
+        when(dateTimeSource.getCurrentTime()).thenReturn(new DateTime(0, 1, 1, 7, 59, 59)); // almost day
+
+        assertTrue(nightRisk.isHigh(loan));
+    }
 }

@@ -34,28 +34,38 @@ public class RiskAnalyzerTest {
     RiskAnalyzer riskAnalyzer;
 
     @Test
-    public void isHigh_shouldReturnTrueOnBothRisks() {
+    public void testBothRisks() {
 
         when(nightRisk.isHigh(any(Loan.class))).thenReturn(true);
         when(ipRisk.isHigh(any(Loan.class))).thenReturn(true);
 
-        assertFalse(riskAnalyzer.isSafe(new Loan())); // none
-
-
-        when(ipRisk.isHigh(any(Loan.class))).thenReturn(false);
-
-        assertFalse(riskAnalyzer.isSafe(new Loan())); // night
-
-
-        when(nightRisk.isHigh(any(Loan.class))).thenReturn(false);
-
-        assertTrue(riskAnalyzer.isSafe(new Loan())); // both
-
-
-        when(ipRisk.isHigh(any(Loan.class))).thenReturn(true);
-
-        assertFalse(riskAnalyzer.isSafe(new Loan())); // ip
-
+        assertFalse(riskAnalyzer.isSafe(new Loan()));
     }
 
+    @Test
+    public void testNightRisk() {
+
+        when(nightRisk.isHigh(any(Loan.class))).thenReturn(true);
+        when(ipRisk.isHigh(any(Loan.class))).thenReturn(false);
+
+        assertFalse(riskAnalyzer.isSafe(new Loan()));
+    }
+
+    @Test
+    public void testIPRisk() {
+
+        when(nightRisk.isHigh(any(Loan.class))).thenReturn(false);
+        when(ipRisk.isHigh(any(Loan.class))).thenReturn(true);
+
+        assertFalse(riskAnalyzer.isSafe(new Loan()));
+    }
+
+    @Test
+    public void testNoneOfRisks() {
+
+        when(nightRisk.isHigh(any(Loan.class))).thenReturn(false);
+        when(ipRisk.isHigh(any(Loan.class))).thenReturn(false);
+
+        assertTrue(riskAnalyzer.isSafe(new Loan()));
+    }
 }
