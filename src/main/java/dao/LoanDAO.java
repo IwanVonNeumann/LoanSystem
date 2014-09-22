@@ -37,7 +37,6 @@ public class LoanDAO {
     public List<Loan> getLoanList() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        //List<Loan> list = session.createQuery("from Loan").list();
         Criteria criteria = session.createCriteria(Loan.class);
         List<Loan> list = criteria.list();
         transaction.commit();
@@ -51,7 +50,6 @@ public class LoanDAO {
 
 
     public List<Loan> getListForTheLastDay(String IPAddress) {
-//        System.out.println("Getting list of loans for IP " + IPAddress + "...");
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -63,7 +61,6 @@ public class LoanDAO {
         List<Loan> list = criteria.list();
         transaction.commit();
         session.close();
-//        System.out.println("Returning " + list.size() + " list items by IP " + IPAddress);
         return list;
     }
 
