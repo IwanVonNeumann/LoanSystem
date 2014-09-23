@@ -28,7 +28,7 @@ import java.util.Properties;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"config", "controller", "dao", "domain"})
 @PropertySource("classpath:h2test.properties")
-public class TestContext {
+public class TestConfig {
 
     @Autowired
     private Environment environment;
@@ -86,6 +86,11 @@ public class TestContext {
 //        riskAnalyzer.add(new NightRisk());
 //        riskAnalyzer.add(new IPRisk());
         return riskAnalyzer;
+    }
+
+    @Bean
+    public UserDAO userDAO() {
+        return new UserDAO();
     }
 
     Properties hibernateProperties() {

@@ -1,14 +1,14 @@
 package controller;
 
-import config.TestContext;
+import config.TestConfig;
 import controller.messenger.MessageService;
 import dao.UserDAO;
-import domain.Loan;
 import domain.User;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,21 +21,21 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 
+import static junit.framework.Assert.assertNull;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Created by IRuskevich on 22.09.2014
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestContext.class})
+@ContextConfiguration(classes = {TestConfig.class})
 @WebAppConfiguration
 public class UserControllerTest {
 
@@ -52,7 +52,7 @@ public class UserControllerTest {
 
     @BeforeClass
     public static void runContext() {
-        SpringApplication.run(TestContext.class);
+        SpringApplication.run(TestConfig.class);
     }
 
     @Before
@@ -88,14 +88,19 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testSave() {
+    public void testSave() throws Exception {
 
-        User user1 = new User("Jack");
-        user1.setId(1);
+        mockMvc.perform(get("users/save?&name={name}", "John"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("save", hasProperty("name", is("John"))));
 
-//        mockMvc.perform(post("/users/save")
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userDAO, times(1)).save(userCaptor.capture());
+        verifyNoMoreInteractions(userDAO);
 
-
+        User user = userCaptor.getValue();
+        assertNull(user.getId());
+        assertThat(user.getName(), is("John"));
     }
 
 }
