@@ -1,8 +1,10 @@
 package controller;
 
 import controller.messenger.MessageService;
+import dao.HistoryEntryDAO;
 import dao.UserDAO;
 import domain.User;
+import domain.history.HistoryEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private HistoryEntryDAO historyEntryDAO;
 
     @Autowired
     private MessageService messageService;
@@ -42,6 +47,13 @@ public class UserController {
                         .append(" created successfully.")
                         .toString());
         return messageService.getMessage();
+    }
+
+    @RequestMapping("/getHistory")
+    public
+    @ResponseBody
+    List<HistoryEntry> getHistory(@RequestParam(value = "userId", required = true) long userId) {
+        return historyEntryDAO.getByUserId(userId);
     }
 
 }

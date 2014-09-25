@@ -6,6 +6,7 @@ import dao.UserDAO;
 import domain.Loan;
 import domain.User;
 
+import domain.history.HistoryManager;
 import domain.risks.RiskAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,9 @@ public class LoanController {
     private RiskAnalyzer riskAnalyzerBean;
 
     @Autowired
+    private HistoryManager historyManager;
+
+    @Autowired
     private MessageService messageService;
 
     @RequestMapping("/list")
@@ -41,13 +45,6 @@ public class LoanController {
     @ResponseBody
     List<Loan> getLoanList() {
         return loanDAO.getLoanList();
-    }
-
-    @RequestMapping("/listForUser")
-    public
-    @ResponseBody
-    List<Loan> getLoanList(@RequestParam(value = "userId", required = true) long userId) {
-        return loanDAO.getByUserId(userId);
     }
 
     @RequestMapping("/add")
@@ -64,6 +61,7 @@ public class LoanController {
 
         if (riskAnalyzerBean.isSafe(loan)) {
             user.addLoan(loan);
+            HistoryManager.saveFloated(loan, user);
             userDAO.save(user);
 
             messageService.setMessage(
@@ -82,11 +80,16 @@ public class LoanController {
     public
     @ResponseBody
     String extendLoan(
-            @RequestParam(value = "loanId", required = true) long loanId) {
+            @RequestParam(value = "userId", required = true) long userId,
+            @RequestParam(value = "loanId", required = true) long loanId)
+    {
 
         Loan loan = loanDAO.getById(loanId);
         loan.extend();
         loanDAO.save(loan);
+
+        User user = userDAO.getById(userId);
+        HistoryManager.saveExtended(loan, user);
 
         messageService.setMessage(
                 new StringBuilder("Loan extended successfully; ")

@@ -51,15 +51,15 @@ public class Application {
 
         Loan loan1 = new Loan();
         loan1.setAmount(300);
-        loan1.setInterest(0.05);
+        loan1.setTerm(15);
 
         Loan loan2 = new Loan();
         loan2.setAmount(200);
-        loan2.setInterest(0.06);
+        loan2.setTerm(10);
 
         Loan loan3 = new Loan();
         loan3.setAmount(400);
-        loan3.setInterest(0.04);
+        loan3.setTerm(20);
 
         User user1 = userList.get(0);
 

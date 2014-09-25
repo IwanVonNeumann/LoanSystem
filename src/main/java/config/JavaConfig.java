@@ -26,8 +26,8 @@ import java.util.Properties;
 
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"config", "controller", "dao", "domain"})
-//@PropertySource("mysql.properties")
-@PropertySource("h2.properties")
+@PropertySource("mysql.properties")
+//@PropertySource("h2.properties")
 public class JavaConfig {
 
     @Autowired

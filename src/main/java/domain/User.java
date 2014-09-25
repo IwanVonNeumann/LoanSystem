@@ -1,5 +1,7 @@
 package domain;
 
+import domain.history.HistoryEntry;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,12 @@ public class User {
     )
     private List<Loan> loanList;
 
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
+    private List<HistoryEntry> history;
+
     public User() {
     }
 
@@ -40,6 +48,11 @@ public class User {
         return loanList;
     }
 
+    public List<HistoryEntry> getHistory() {
+        return history;
+    }
+
+
 
     public void setId(long id) {
         this.id = id;
@@ -49,10 +62,15 @@ public class User {
         this.name = name;
     }
 
-
     public void setLoanList(List<Loan> loanList) {
         this.loanList = loanList;
     }
+
+    public void setHistory(List<HistoryEntry> history) {
+        this.history = history;
+    }
+
+
 
     @Override
     public String toString() {
@@ -85,5 +103,10 @@ public class User {
         loanList.add(loan);
     }
 
+    public void addHistoryEntry(HistoryEntry entry) {
+        if (history == null)
+            history = new ArrayList<HistoryEntry>();
+        history.add(entry);
+    }
 
 }
