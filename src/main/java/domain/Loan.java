@@ -26,6 +26,8 @@ public class Loan {
     @Column
     private double interest;
 
+    public static final double DEFAULT_INTEREST = 0.5d;
+
     public static final double EXTENSION_MULTIPLIER = 1.5d;
 
     @Column
@@ -48,8 +50,9 @@ public class Loan {
 
 
     public Loan() {
+        interest = DEFAULT_INTEREST;
         floatedAt = new Date();
-        repaidAt = new DateTime().plus(DEFAULT_TERM).toDate();
+//        repaidAt = new DateTime().plus(DEFAULT_TERM).toDate();
         /*System.out.println("New loan:");
         System.out.println("Floated at " + floatedAt);
         System.out.println("With period of " + DEFAULT_TERM);
@@ -58,6 +61,13 @@ public class Loan {
         active = true;
     }
 
+    // for Controller
+    public Loan(double amount, int days, String ipAddress) {
+        this();
+        this.amount = amount;
+        this.ipAddress = ipAddress;
+        setTerm(days);
+    }
 
     public long getId() {
         return id;
@@ -108,6 +118,10 @@ public class Loan {
         this.repaidAt = repaidAt;
     }
 
+    public void setTerm(int days) {
+        repaidAt = new DateTime().plusDays(days).toDate();
+    }
+
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
@@ -140,9 +154,6 @@ public class Loan {
     public void extend() {
         interest *= EXTENSION_MULTIPLIER;
         repaidAt = new DateTime(repaidAt).plus(DEFAULT_EXTENSION_TERM).toDate();
-        /*System.out.println("Extending Loan with ID " + id);
-        System.out.println("Interest: " + interest);
-        System.out.println("To be repaid at " + repaidAt);*/
     }
 
     @Override
@@ -152,7 +163,6 @@ public class Loan {
                 .append("id", id)
                 .append("amount", amount)
                 .append("interest", interest)
-//                .append("user", user)
                 .toString();
     }
 }

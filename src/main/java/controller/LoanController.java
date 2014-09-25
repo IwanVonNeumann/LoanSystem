@@ -57,14 +57,10 @@ public class LoanController {
             HttpServletRequest request,
             @RequestParam(value = "userId", required = true) long userId,
             @RequestParam(value = "amount", required = true) double amount,
-            @RequestParam(value = "interest", required = true) double interest) {
+            @RequestParam(value = "days", required = true) int days) {
 
-        Loan loan = new Loan();
+        Loan loan = new Loan(amount, days, request.getRemoteAddr());
         User user = userDAO.getById(userId);
-
-        loan.setAmount(amount);
-        loan.setInterest(interest);
-        loan.setIpAddress(request.getRemoteAddr());
 
         if (riskAnalyzerBean.isSafe(loan)) {
             user.addLoan(loan);

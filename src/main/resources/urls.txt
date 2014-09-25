@@ -6,7 +6,7 @@ http://localhost:8080/users/save?&name=Ulan
 
 http://localhost:8080/loans/list
 
-http://localhost:8080/loans/add?&userId=1&amount=300&interest=0.05
+http://localhost:8080/loans/add?&userId=1&amount=300&days=15
 
 http://localhost:8080/loans/extend?&loanId=1
 
