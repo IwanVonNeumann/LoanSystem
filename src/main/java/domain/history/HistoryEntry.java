@@ -12,10 +12,12 @@ public class HistoryEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "EntryID")
     private long id;
 
     @Column
     private String action;
+
 
     public HistoryEntry() {
     }
@@ -24,8 +26,18 @@ public class HistoryEntry {
         this.action = action;
     }
 
+
+    public long getId() {
+        return id;
+    }
+
     public String getAction() {
         return action;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setAction(String action) {

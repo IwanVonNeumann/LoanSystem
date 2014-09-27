@@ -16,6 +16,7 @@ public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "LoanID")
     private long id;
 
     @Column

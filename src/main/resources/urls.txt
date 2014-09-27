@@ -8,6 +8,6 @@ http://localhost:8080/users/getHistory?&userId=1
 
 http://localhost:8080/loans/add?&userId=1&amount=300&days=15
 
-http://localhost:8080/loans/extend?&userId=&loanId=1
+http://localhost:8080/loans/extend?&userId=1&loanId=1
 
 http://localhost:8080/loans/listForUser?&userId=1

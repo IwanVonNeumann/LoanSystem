@@ -26,7 +26,7 @@ public class Application {
         SpringApplication.run(JavaConfig.class, args);
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
 
         System.out.println("PostConstruct method call...");

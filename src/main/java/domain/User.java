@@ -1,9 +1,12 @@
 package domain;
 
 import domain.history.HistoryEntry;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Entity
@@ -12,6 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "UserID")
     private long id;
 
     @Column
@@ -21,12 +25,16 @@ public class User {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
+    @JoinColumn(name="UserID")
+    @Fetch(FetchMode.SELECT)
     private List<Loan> loanList;
 
     @OneToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
+    @JoinColumn(name="UserID")
+    @Fetch(FetchMode.SELECT)
     private List<HistoryEntry> history;
 
     public User() {
@@ -53,7 +61,6 @@ public class User {
     }
 
 
-
     public void setId(long id) {
         this.id = id;
     }
@@ -71,13 +78,14 @@ public class User {
     }
 
 
-
     @Override
     public String toString() {
         return new org.apache.commons.lang3.builder.ToStringBuilder(
                 this, org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("name", name)
+                .append("loans", loanList.size())
+                .append("history", history.size())
                 .toString();
     }
 

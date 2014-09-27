@@ -34,8 +34,8 @@ public class LoanController {
     @Autowired
     private RiskAnalyzer riskAnalyzerBean;
 
-    @Autowired
-    private HistoryManager historyManager;
+//    /*@Autowired
+//    private HistoryManager historyManager;*/
 
     @Autowired
     private MessageService messageService;
@@ -57,9 +57,9 @@ public class LoanController {
             @RequestParam(value = "days", required = true) int days) {
 
         Loan loan = new Loan(amount, days, request.getRemoteAddr());
-        User user = userDAO.getById(userId);
 
         if (riskAnalyzerBean.isSafe(loan)) {
+            User user = userDAO.getById(userId);
             user.addLoan(loan);
             HistoryManager.saveFloated(loan, user);
             userDAO.save(user);
@@ -90,6 +90,7 @@ public class LoanController {
 
         User user = userDAO.getById(userId);
         HistoryManager.saveExtended(loan, user);
+        userDAO.save(user);
 
         messageService.setMessage(
                 new StringBuilder("Loan extended successfully; ")

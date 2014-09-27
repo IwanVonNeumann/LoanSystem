@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -31,6 +32,9 @@ public class HistoryEntryDAO {
     }
 
     public List<HistoryEntry> getByUserId(long id) {
-        return userDAO.getById(id).getHistory();
+        List<HistoryEntry> history = userDAO.getById(id).getHistory();
+        System.out.println("Returning history of " + history.size() + " items...");
+        return history;
     }
+
 }
