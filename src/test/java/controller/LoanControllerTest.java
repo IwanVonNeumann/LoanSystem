@@ -27,6 +27,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -103,5 +105,72 @@ public class LoanControllerTest {
 
         verify(loanDAO, times(1)).getLoanList();
         verifyNoMoreInteractions(loanDAO);
+    }
+
+    @Test
+    public void additionTest() throws Exception {
+
+        User user = new User("John");
+
+        int id = 1;
+        int amount = 200;
+        int days = 25;
+
+        String message = "Test message";
+
+        when(riskAnalyzerBean.isSafe(any(Loan.class))).thenReturn(true);
+        when(userDAO.getById(id)).thenReturn(user);
+        when(messageService.getMessage()).thenReturn(message);
+
+        mockMvc.perform(get("/loans/add")
+                .param("userId", String.valueOf(id))
+                .param("amount", String.valueOf(amount))
+                .param("days", String.valueOf(days)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=ISO-8859-1"));
+//                .andExpect(jsonPath("$", hasSize(1))); //TODO
+//                .andExpect(jsonPath("$[0].value").exists())
+//                .andExpect(jsonPath("$[0].value").value(message));
+
+        verify(userDAO, times(1)).getById(id);
+        verify(userDAO, times(1)).save(user);
+        verifyNoMoreInteractions(userDAO);
+
+    }
+
+    @Test
+    public void extensionTest() throws Exception {
+
+        User user = new User("John");
+        Loan loan = new Loan(300, 30, "192.168.1.5");
+
+        user.addLoan(loan);
+
+        int userID = 1;
+        int loanID = 1;
+
+        String message = "Test message";
+
+        when(userDAO.getById(userID)).thenReturn(user);
+        when(loanDAO.getById(loanID)).thenReturn(loan);
+        when(messageService.getMessage()).thenReturn(message);
+
+        mockMvc.perform(get("/loans/extend")
+                .param("userId", String.valueOf(userID))
+                .param("loanId", String.valueOf(loanID)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/plain;charset=ISO-8859-1"));
+//                .andExpect(jsonPath("$", hasSize(1))); // TODO
+//                .andExpect(jsonPath("$[0].value").exists())
+//                .andExpect(jsonPath("$[0].value").value(message));
+
+        verify(loanDAO, times(1)).getById(loanID);
+        verify(loanDAO, times(1)).save(loan);
+        verify(userDAO, times(1)).getById(userID);
+        verify(userDAO, times(1)).save(user);
+        verifyNoMoreInteractions(loanDAO);
+        verifyNoMoreInteractions(userDAO);
     }
 }

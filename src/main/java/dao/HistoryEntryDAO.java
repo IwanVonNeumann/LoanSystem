@@ -32,9 +32,7 @@ public class HistoryEntryDAO {
     }
 
     public List<HistoryEntry> getByUserId(long id) {
-        List<HistoryEntry> history = userDAO.getById(id).getHistory();
-        System.out.println("Returning history of " + history.size() + " items...");
-        return history;
+        return userDAO.getById(id).getHistory();
     }
 
 }

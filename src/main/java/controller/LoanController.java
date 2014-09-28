@@ -9,10 +9,12 @@ import domain.User;
 import domain.history.HistoryManager;
 import domain.risks.RiskAnalyzer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -48,6 +50,7 @@ public class LoanController {
     }
 
     @RequestMapping("/add")
+    @ResponseStatus(HttpStatus.OK)
     public
     @ResponseBody
     String addLoan(
@@ -57,6 +60,8 @@ public class LoanController {
             @RequestParam(value = "days", required = true) int days) {
 
         Loan loan = new Loan(amount, days, request.getRemoteAddr());
+
+        System.out.println(loan);
 
         if (riskAnalyzerBean.isSafe(loan)) {
             User user = userDAO.getById(userId);

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.history.HistoryEntry;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -23,6 +25,17 @@ public class UserTest {
         user.addLoan(loan);
         assertEquals(user.getLoanList().size(), 1);
         assertSame(user.getLoanList().get(0), loan);
+    }
+
+    @Test
+    public void addHistoryEntryTest() {
+        User user = new User();
+        assertNull(user.getHistory());
+
+        HistoryEntry entry = new HistoryEntry("Action");
+        user.addHistoryEntry(entry);
+        assertEquals(user.getHistory().size(), 1);
+        assertSame(user.getHistory().get(0), entry);
     }
 
 }

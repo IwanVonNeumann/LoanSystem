@@ -16,8 +16,7 @@ public class HistoryManager {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append("[").append(loan.getFloatedAt()).append("]")
-                .append(" Loan with ID ").append(loan.getId())
-                .append(" floated for ").append(user.getName()).append(";")
+                .append(" Loan floated for ").append(user.getName()).append(";")
                 .append(" Amount: ").append(loan.getAmount()).append(";")
                 .append(" Interest: ").append(loan.getInterest()).append(";")
                 .append(" Repayment term: ").append(loan.getRepaidAt()).append(".");
