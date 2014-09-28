@@ -44,6 +44,7 @@ public class LoanDAOTest {
     public static void shutDownContext() {
         SpringApplication.exit(applicationContext);
     }
+
     @Test
     public void createGetUpdateTest() {
 

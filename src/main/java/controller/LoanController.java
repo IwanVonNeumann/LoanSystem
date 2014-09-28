@@ -66,7 +66,7 @@ public class LoanController {
         if (riskAnalyzerBean.isSafe(loan)) {
             User user = userDAO.getById(userId);
             user.addLoan(loan);
-            HistoryManager.saveFloated(loan, user);
+            HistoryManager.saveFloated(user, loan);
             userDAO.save(user);
 
             messageService.setMessage(
@@ -94,7 +94,7 @@ public class LoanController {
         loanDAO.save(loan);
 
         User user = userDAO.getById(userId);
-        HistoryManager.saveExtended(loan, user);
+        HistoryManager.saveExtended(user, loan);
         userDAO.save(user);
 
         messageService.setMessage(

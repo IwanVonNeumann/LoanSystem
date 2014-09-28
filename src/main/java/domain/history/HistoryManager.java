@@ -12,28 +12,38 @@ import org.springframework.stereotype.Component;
 @Component
 public class HistoryManager {
 
-    public static void saveFloated(Loan loan, User user) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("[").append(loan.getFloatedAt()).append("]")
+    public static void saveFloated(User user, Loan loan) {
+        user.addHistoryEntry(new HistoryEntry(getSaveMessage(user, loan)));
+    }
+
+    public static void saveExtended(User user, Loan loan) {
+        user.addHistoryEntry(new HistoryEntry(getExtendMessage(user, loan)));
+    }
+
+    public static String getSaveMessage(User user, Loan loan) {
+        StringBuilder stringBuilder = new StringBuilder()
+                .append("[").append(
+                        new DateTime(loan.getFloatedAt())).append("]")
                 .append(" Loan floated for ").append(user.getName()).append(";")
                 .append(" Amount: ").append(loan.getAmount()).append(";")
                 .append(" Interest: ").append(loan.getInterest()).append(";")
-                .append(" Repayment term: ").append(loan.getRepaidAt()).append(".");
+                .append(" Repayment term: ").append(
+                        new DateTime(loan.getRepaidAt())).append(".");
 
-        user.addHistoryEntry(new HistoryEntry(stringBuilder.toString()));
+        return stringBuilder.toString();
     }
 
-    public static void saveExtended(Loan loan, User user) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder
-                .append("[").append(new DateTime(loan.getRepaidAt()).minus(loan.DEFAULT_EXTENSION_TERM)).append("]")
+    public static String getExtendMessage(User user, Loan loan) {
+        StringBuilder stringBuilder = new StringBuilder()
+                .append("[").append(
+                        new DateTime(loan.getRepaidAt()).minus(loan.DEFAULT_EXTENSION_TERM)).append("]")
                 .append(" Loan with ID ").append(loan.getId())
                 .append(" extended for ").append(user.getName()).append(";")
                 .append(" Amount: ").append(loan.getAmount()).append(";")
                 .append(" Interest: ").append(loan.getInterest()).append(";")
-                .append(" Repayment term: ").append(loan.getRepaidAt()).append(".");
+                .append(" Repayment term: ").append(
+                        new DateTime(loan.getRepaidAt())).append(".");
 
-        user.addHistoryEntry(new HistoryEntry(stringBuilder.toString()));
+        return stringBuilder.toString();
     }
 }
