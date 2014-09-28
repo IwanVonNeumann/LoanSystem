@@ -6,6 +6,7 @@ import dao.HistoryEntryDAO;
 import dao.UserDAO;
 import domain.User;
 import domain.history.HistoryEntry;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -56,9 +58,16 @@ public class UserControllerTest {
 
     private MockMvc mockMvc;
 
+    private static ApplicationContext applicationContext;
+
     @BeforeClass
     public static void runContext() {
-        SpringApplication.run(TestConfig.class);
+        applicationContext = SpringApplication.run(TestConfig.class);
+    }
+
+    @AfterClass
+    public static void shutDownContext() {
+        SpringApplication.exit(applicationContext);
     }
 
     @Before

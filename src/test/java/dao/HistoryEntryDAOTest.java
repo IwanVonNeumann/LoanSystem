@@ -3,11 +3,13 @@ package dao;
 import config.TestConfig;
 import domain.User;
 import domain.history.HistoryEntry;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -29,9 +31,16 @@ public class HistoryEntryDAOTest {
     @Autowired
     UserDAO userDAO;
 
+    private static ApplicationContext applicationContext;
+
     @BeforeClass
     public static void runContext() {
-        SpringApplication.run(TestConfig.class);
+        applicationContext = SpringApplication.run(TestConfig.class);
+    }
+
+    @AfterClass
+    public static void shutDownContext() {
+        SpringApplication.exit(applicationContext);
     }
 
     @Test
