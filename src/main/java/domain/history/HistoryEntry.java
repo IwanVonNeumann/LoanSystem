@@ -43,4 +43,16 @@ public class HistoryEntry {
     public void setAction(String action) {
         this.action = action;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof HistoryEntry)) return false;
+
+        HistoryEntry entry = (HistoryEntry) o;
+
+        if (!action.equals(entry.action)) return false;
+
+        return true;
+    }
 }

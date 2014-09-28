@@ -142,9 +142,11 @@ public class Loan {
         if (Double.compare(loan.amount, amount) != 0) return false;
         //if (id != loan.id) return false;
         if (Double.compare(loan.interest, interest) != 0) return false;
-        if (!floatedAt.equals(loan.floatedAt)) return false;
+//        if (!floatedAt.equals(loan.floatedAt)) return false;
+        if (!new DateTime(floatedAt).equals(new DateTime(loan.floatedAt))) return false;
         if (ipAddress != null ? !ipAddress.equals(loan.ipAddress) : loan.ipAddress != null) return false;
-        if (!repaidAt.equals(loan.repaidAt)) return false;
+//        if (!repaidAt.equals(loan.repaidAt)) return false;
+        if (!new DateTime(repaidAt).equals(new DateTime(loan.repaidAt))) return false;
 
         return true;
     }
@@ -157,7 +159,7 @@ public class Loan {
         repaidAt = new DateTime(repaidAt).plus(DEFAULT_EXTENSION_TERM).toDate();
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return new org.apache.commons.lang3.builder.ToStringBuilder(
                 this, org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE)
@@ -165,5 +167,18 @@ public class Loan {
                 .append("amount", amount)
                 .append("interest", interest)
                 .toString();
+    }*/
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", interest=" + interest +
+                ", floatedAt=" + floatedAt +
+                ", repaidAt=" + repaidAt +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", active=" + active +
+                '}';
     }
 }
