@@ -59,7 +59,7 @@ public class MessageService {
         return result;
     }
 
-    private String getUserCreatedMessage(User user) {
+    public String getUserCreatedMessage(User user) {
 
         String result = new StringBuilder()
                 .append("User with name ")

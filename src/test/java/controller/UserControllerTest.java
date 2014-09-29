@@ -21,10 +21,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
@@ -111,14 +113,15 @@ public class UserControllerTest {
 
         when(messageService.getMessage()).thenReturn(message);
 
-        mockMvc.perform(get("/users/save")
-                .param("name", name))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("text/plain;charset=ISO-8859-1"));
-//                .andExpect(jsonPath("$", hasSize(1))); //TODO
-//                .andExpect(jsonPath("$[0].value").exists())
-//                .andExpect(jsonPath("$[0].value").value(message));
+        MvcResult result =
+                mockMvc.perform(get("/users/save")
+                        .param("name", name))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
+                        .andReturn();
+
+        assertEquals(result.getResponse().getContentAsString(), message);
 
         verify(userDAO, times(1)).save(any(User.class));
         verifyNoMoreInteractions(userDAO);
