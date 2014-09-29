@@ -152,6 +152,38 @@ public class LoanControllerTest {
     }
 
     @Test
+    public void additionFailTest() throws Exception{
+
+        User user = new User("John");
+
+        int id = 1;
+        int amount = 200;
+        int days = 25;
+
+        String message = "Test message";
+
+        when(riskAnalyzerBean.isSafe(any(Loan.class))).thenReturn(false);
+        when(userDAO.getById(id)).thenReturn(user);
+        when(messageService.getMessage()).thenReturn(message);
+
+        MvcResult result =
+                mockMvc.perform(get("/loans/add")
+                        .param("userId", String.valueOf(id))
+                        .param("amount", String.valueOf(amount))
+                        .param("days", String.valueOf(days)))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
+                        .andReturn();
+
+        assertEquals(result.getResponse().getContentAsString(), message);
+
+        verify(userDAO, times(0)).getById(id);
+        verify(userDAO, times(0)).save(user);
+        verifyNoMoreInteractions(userDAO);
+    }
+
+    @Test
     public void extensionTest() throws Exception {
 
         User user = new User("John");
