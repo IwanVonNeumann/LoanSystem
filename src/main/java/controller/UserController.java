@@ -41,11 +41,8 @@ public class UserController {
 
         User user = new User(name);
         userDAO.save(user);
-        messageService.setMessage(
-                new StringBuilder("User with name ")
-                        .append(user.getName())
-                        .append(" created successfully.")
-                        .toString());
+        messageService.setUserCreatedMessage(user);
+
         return messageService.getMessage();
     }
 

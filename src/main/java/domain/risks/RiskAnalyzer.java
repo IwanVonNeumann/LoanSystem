@@ -51,7 +51,7 @@ public class RiskAnalyzer {
 
     private boolean riskIsHigh(Loan loan, Risk risk) {
         if (risk.isHigh(loan)) {
-            messageService.setMessage(risk.getMessage());
+            messageService.setHighRiskMessage(risk);
             return true;
         }
         return false;
