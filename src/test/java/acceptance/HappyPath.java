@@ -3,6 +3,7 @@ package acceptance;
 import config.TestSpringConfiguration;
 import controller.LoanController;
 import controller.UserController;
+import controller.messenger.MessageService;
 import dao.LoanDAO;
 import dao.UserDAO;
 import domain.Loan;
@@ -53,6 +54,9 @@ public class HappyPath {
     @Autowired
     LoanController loanController;
 
+    @Autowired
+    MessageService messageService;
+
     private MockMvc userMockMvc;
     private MockMvc loanMockMvc;
 
@@ -90,16 +94,11 @@ public class HappyPath {
                         .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
                         .andReturn();
 
-        assertEquals(result.getResponse().getContentAsString(),
-                new StringBuffer()
-                        .append("User with name ")
-                        .append(name)
-                        .append(" created successfully.")
-                        .toString());
-
         int userID = 1;
 
         User user1 = userDAO.getById(userID);
+
+        assertEquals(result.getResponse().getContentAsString(), messageService.getUserCreatedMessage(user1));
 
         assertEquals(user1.getName(), name);
 

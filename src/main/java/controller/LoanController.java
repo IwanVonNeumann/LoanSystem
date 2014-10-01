@@ -69,13 +69,7 @@ public class LoanController {
             HistoryManager.saveFloated(user, loan);
             userDAO.save(user);
 
-            messageService.setMessage(
-                    new StringBuilder("Loan floated successfully for client ")
-                            .append(user.getName()).append("; ")
-                            .append("Amount: ").append(loan.getAmount()).append("; ")
-                            .append("Interest: ").append(loan.getInterest()).append("; ")
-                            .append("To be repaid at: ").append(loan.getRepaidAt()).append(".")
-                            .toString());
+            messageService.setLoanFloatedMessage(user, loan);
         }
 
         return messageService.getMessage();
@@ -97,12 +91,8 @@ public class LoanController {
         HistoryManager.saveExtended(user, loan);
         userDAO.save(user);
 
-        messageService.setMessage(
-                new StringBuilder("Loan extended successfully; ")
-                        .append("Amount: ").append(loan.getAmount()).append("; ")
-                        .append("Interest: ").append(loan.getInterest()).append("; ")
-                        .append("To be repaid at: ").append(loan.getRepaidAt()).append(".")
-                        .toString());
+        messageService.setLoanExtendedMessage(loan);
+
         return messageService.getMessage();
     }
 }
