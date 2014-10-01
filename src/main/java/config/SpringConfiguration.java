@@ -28,7 +28,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = {"config", "controller", "dao", "domain"})
 //@PropertySource("mysql.properties")
 @PropertySource("h2.properties")
-public class JavaConfig {
+public class SpringConfiguration {
 
     @Autowired
     private Environment environment;

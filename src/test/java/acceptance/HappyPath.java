@@ -1,6 +1,6 @@
 package acceptance;
 
-import config.TestConfig;
+import config.TestSpringConfiguration;
 import controller.LoanController;
 import controller.UserController;
 import dao.LoanDAO;
@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestSpringConfiguration.class})
 @WebAppConfiguration
 public class HappyPath {
 
@@ -60,7 +60,7 @@ public class HappyPath {
 
     @BeforeClass
     public static void runContext() {
-        applicationContext = SpringApplication.run(TestConfig.class);
+        applicationContext = SpringApplication.run(TestSpringConfiguration.class);
     }
 
     @AfterClass

@@ -14,16 +14,14 @@ import java.util.List;
 @Component
 public class IPRisk implements Risk {
 
-    public static final int MAX_LOANS_FROM_IP = 3;
-
     @Autowired
     private LoanDAO loanDAO;
 
-    private String message;
 
-    public IPRisk() {
-        message = "Maximal loans count from this IP address reached.";
-    }
+    public static final int MAX_LOANS_FROM_IP = 3;
+
+    public static final String MESSAGE = "Maximal loans count from this IP address reached.";
+
 
     @Override
     public boolean isHigh(Loan loan) {
@@ -32,17 +30,8 @@ public class IPRisk implements Risk {
         return loanList.size() >= MAX_LOANS_FROM_IP;
     }
 
-/*    private int countIPs(List<Loan> loanList, String IPAddress) {
-        int c = 0;
-        for (Loan loan : loanList) {
-            if (loan.getIpAddress().equals(IPAddress)) c++;
-            if (c == MAX_LOANS_FROM_IP) break;
-        }
-        return c;
-    }*/
-
     @Override
     public String getMessage() {
-        return message;
+        return MESSAGE;
     }
 }

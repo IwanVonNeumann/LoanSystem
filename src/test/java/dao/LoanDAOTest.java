@@ -1,6 +1,6 @@
 package dao;
 
-import config.TestConfig;
+import config.TestSpringConfiguration;
 import domain.Loan;
 import domain.User;
 import org.joda.time.DateTime;
@@ -24,7 +24,7 @@ import static junit.framework.Assert.assertEquals;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestSpringConfiguration.class})
 public class LoanDAOTest {
 
     @Autowired
@@ -37,7 +37,7 @@ public class LoanDAOTest {
 
     @BeforeClass
     public static void runContext() {
-        applicationContext = SpringApplication.run(TestConfig.class);
+        applicationContext = SpringApplication.run(TestSpringConfiguration.class);
     }
 
     @AfterClass

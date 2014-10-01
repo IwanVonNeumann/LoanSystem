@@ -24,7 +24,7 @@ import java.util.Properties;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"config", "controller", "dao", "domain"})
 @PropertySource("classpath:h2test.properties")
-public class TestConfig {
+public class TestSpringConfiguration {
 
     @Autowired
     private Environment environment;

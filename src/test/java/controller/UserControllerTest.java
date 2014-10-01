@@ -1,6 +1,6 @@
 package controller;
 
-import config.TestConfig;
+import config.TestSpringConfiguration;
 import controller.messenger.MessageService;
 import dao.HistoryEntryDAO;
 import dao.UserDAO;
@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -40,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestSpringConfiguration.class})
 @WebAppConfiguration
 public class UserControllerTest {
 
@@ -62,7 +61,7 @@ public class UserControllerTest {
 
     @BeforeClass
     public static void runContext() {
-        applicationContext = SpringApplication.run(TestConfig.class);
+        applicationContext = SpringApplication.run(TestSpringConfiguration.class);
     }
 
     @AfterClass
@@ -107,7 +106,7 @@ public class UserControllerTest {
 
         String name = "John";
 
-        String message = "Test message";
+        String message = "Test MESSAGE";
 
         when(messageService.getMessage()).thenReturn(message);
 
@@ -118,7 +117,7 @@ public class UserControllerTest {
                 .andExpect(content().contentType("text/plain;charset=ISO-8859-1"));
 //                .andExpect(jsonPath("$", hasSize(1))); //TODO
 //                .andExpect(jsonPath("$[0].value").exists())
-//                .andExpect(jsonPath("$[0].value").value(message));
+//                .andExpect(jsonPath("$[0].value").value(MESSAGE));
 
         verify(userDAO, times(1)).save(any(User.class));
         verifyNoMoreInteractions(userDAO);

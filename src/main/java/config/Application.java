@@ -4,13 +4,10 @@ import dao.LoanDAO;
 import dao.UserDAO;
 import domain.Loan;
 import domain.User;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
@@ -23,7 +20,7 @@ public class Application {
     LoanDAO loanDAO;
 
     public static void main(String[] args) {
-        SpringApplication.run(JavaConfig.class, args);
+        SpringApplication.run(SpringConfiguration.class, args);
     }
 
 //    @PostConstruct

@@ -1,6 +1,6 @@
 package controller;
 
-import config.TestConfig;
+import config.TestSpringConfiguration;
 import controller.messenger.MessageService;
 import dao.LoanDAO;
 import dao.UserDAO;
@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestSpringConfiguration.class})
 @WebAppConfiguration
 public class LoanControllerTest {
 
@@ -64,7 +64,7 @@ public class LoanControllerTest {
 
     @BeforeClass
     public static void runContext() {
-         applicationContext = SpringApplication.run(TestConfig.class);
+         applicationContext = SpringApplication.run(TestSpringConfiguration.class);
     }
 
     @AfterClass
@@ -125,7 +125,7 @@ public class LoanControllerTest {
         int amount = 200;
         int days = 25;
 
-        String message = "Test message";
+        String message = "Test MESSAGE";
 
         when(riskAnalyzerBean.isSafe(any(Loan.class))).thenReturn(true);
         when(userDAO.getById(id)).thenReturn(user);
@@ -140,7 +140,7 @@ public class LoanControllerTest {
                 .andExpect(content().contentType("text/plain;charset=ISO-8859-1"));
 //                .andExpect(jsonPath("$", hasSize(1))); //TODO
 //                .andExpect(jsonPath("$[0].value").exists())
-//                .andExpect(jsonPath("$[0].value").value(message));
+//                .andExpect(jsonPath("$[0].value").value(MESSAGE));
 
         verify(userDAO, times(1)).getById(id);
         verify(userDAO, times(1)).save(user);
@@ -159,7 +159,7 @@ public class LoanControllerTest {
         int userID = 1;
         int loanID = 1;
 
-        String message = "Test message";
+        String message = "Test MESSAGE";
 
         when(userDAO.getById(userID)).thenReturn(user);
         when(loanDAO.getById(loanID)).thenReturn(loan);
@@ -173,7 +173,7 @@ public class LoanControllerTest {
                 .andExpect(content().contentType("text/plain;charset=ISO-8859-1"));
 //                .andExpect(jsonPath("$", hasSize(1))); // TODO
 //                .andExpect(jsonPath("$[0].value").exists())
-//                .andExpect(jsonPath("$[0].value").value(message));
+//                .andExpect(jsonPath("$[0].value").value(MESSAGE));
 
         verify(loanDAO, times(1)).getById(loanID);
         verify(loanDAO, times(1)).save(loan);

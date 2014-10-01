@@ -1,12 +1,13 @@
 package domain;
 
 import domain.history.HistoryEntry;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @Entity
@@ -80,8 +81,7 @@ public class User {
 
     @Override
     public String toString() {
-        return new org.apache.commons.lang3.builder.ToStringBuilder(
-                this, org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("name", name)
                 .append("loans", loanList.size())

@@ -13,14 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class NightRisk implements Risk {
 
-    private String message;
-
     @Autowired
     private DateTimeSource dateTimeSource;
 
-    public NightRisk() {
-        message = "Cannot float maximal loan at night.";
-    }
+    public static String MESSAGE = "Cannot float maximal loan at night.";
+
 
     @Override
     public boolean isHigh(Loan loan) {
@@ -35,6 +32,6 @@ public class NightRisk implements Risk {
 
     @Override
     public String getMessage() {
-        return message;
+        return MESSAGE;
     }
 }

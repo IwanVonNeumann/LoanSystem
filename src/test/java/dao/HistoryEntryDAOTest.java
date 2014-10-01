@@ -1,6 +1,6 @@
 package dao;
 
-import config.TestConfig;
+import config.TestSpringConfiguration;
 import domain.User;
 import domain.history.HistoryEntry;
 import org.junit.AfterClass;
@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertEquals;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestSpringConfiguration.class})
 public class HistoryEntryDAOTest {
 
     @Autowired
@@ -35,7 +35,7 @@ public class HistoryEntryDAOTest {
 
     @BeforeClass
     public static void runContext() {
-        applicationContext = SpringApplication.run(TestConfig.class);
+        applicationContext = SpringApplication.run(TestSpringConfiguration.class);
     }
 
     @AfterClass
