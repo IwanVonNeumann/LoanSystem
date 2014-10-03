@@ -2,19 +2,24 @@ package controller;
 
 import config.TestSpringConfiguration;
 import controller.messenger.MessageService;
+
 import dao.LoanDAO;
 import dao.UserDAO;
+
 import domain.Loan;
 import domain.User;
 import domain.risks.RiskAnalyzer;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,10 +36,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Created by IRuskevich on 22.09.2014
@@ -46,21 +48,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LoanControllerTest {
 
     @Mock
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Mock
-    LoanDAO loanDAO;
+    private LoanDAO loanDAO;
 
     @Mock
-    RiskAnalyzer riskAnalyzerBean;
+    private RiskAnalyzer riskAnalyzerBean;
 
     @Mock
-    MessageService messageService;
+    private MessageService messageService;
 
     @InjectMocks
-    LoanController loanController;
+    private LoanController loanController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     private static ApplicationContext applicationContext;
 
@@ -138,7 +140,7 @@ public class LoanControllerTest {
                         .param("userId", String.valueOf(id))
                         .param("amount", String.valueOf(amount))
                         .param("days", String.valueOf(days)))
-                        .andDo(print())
+//                        .andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
                         .andReturn();
@@ -171,7 +173,7 @@ public class LoanControllerTest {
                         .param("userId", String.valueOf(id))
                         .param("amount", String.valueOf(amount))
                         .param("days", String.valueOf(days)))
-                        .andDo(print())
+//                        .andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
                         .andReturn();
@@ -204,7 +206,7 @@ public class LoanControllerTest {
                 mockMvc.perform(get("/loans/extend")
                         .param("userId", String.valueOf(userID))
                         .param("loanId", String.valueOf(loanID)))
-                        .andDo(print())
+//                        .andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
                         .andReturn();

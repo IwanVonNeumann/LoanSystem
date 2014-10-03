@@ -26,14 +26,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -46,16 +42,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
 
     @Mock
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Mock
-    HistoryEntryDAO historyEntryDAO;
+    private HistoryEntryDAO historyEntryDAO;
 
     @Mock
-    MessageService messageService;
+    private MessageService messageService;
 
     @InjectMocks
-    UserController userController;
+    private UserController userController;
 
     private MockMvc mockMvc;
 
@@ -115,7 +111,7 @@ public class UserControllerTest {
         MvcResult result =
                 mockMvc.perform(get("/users/save")
                         .param("name", name))
-                        .andDo(print())
+//                        .andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("text/plain;charset=ISO-8859-1"))
                         .andReturn();
@@ -143,7 +139,7 @@ public class UserControllerTest {
 
         mockMvc.perform(get("/users/getHistory")
                 .param("userId", String.valueOf(id)))
-                .andDo(print())
+//                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))

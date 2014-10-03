@@ -43,19 +43,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HappyPath {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
-    LoanDAO loanDAO;
+    private LoanDAO loanDAO;
 
     @Autowired
-    UserController userController;
+    private UserController userController;
 
     @Autowired
-    LoanController loanController;
+    private LoanController loanController;
 
     @Autowired
-    MessageService messageService;
+    private MessageService messageService;
 
     private MockMvc userMockMvc;
     private MockMvc loanMockMvc;

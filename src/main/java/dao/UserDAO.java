@@ -1,13 +1,13 @@
 package dao;
 
 import domain.User;
-import org.hibernate.*;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @Component
@@ -20,6 +20,7 @@ public class UserDAO {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.saveOrUpdate(user);
+        session.refresh(user);
         transaction.commit();
         session.close();
     }
